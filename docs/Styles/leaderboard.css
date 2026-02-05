@@ -1,4 +1,4 @@
-/* Game Name & Catagory */
+/* Game Name & category */
 #banner {
 	padding: 1%;
 	position: relative;
@@ -27,7 +27,7 @@
 	font-size: xx-large;
 	font-weight: bolder;
 }
-#catagory {
+#category {
 	font-size: x-large;
 	font-weight: bold;
 }

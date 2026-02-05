@@ -12,7 +12,7 @@ const titleText      = document.getElementById("headerTitle")
 
 const gameName     = document.getElementById("game")
 const bannerDiv    = document.getElementById("bannerImage")
-const catagoryName = document.getElementById("catagory")
+const categoryName = document.getElementById("category")
 
 const leaderboardTable = document.querySelector(".lbList");
 
@@ -76,18 +76,18 @@ async function handleLeaderboard(visible)
 			
 			var catagories = await fetchGameCatagories(gamePath + "/catagories")
 			
-			if (catagory == null)
-				catagory = "any%"
+			if (category == null)
+				category = "any%"
 
-			var curCatagory = catagories[catagory]
-			if (!curCatagory) // Fall back
-				curCatagory = catagories["any%"]
+			var curcategory = catagories[category]
+			if (!curcategory) // Fall back
+				curcategory = catagories["any%"]
 
 			// Actual leaderboard stuff
-			catagoryName.innerText = curCatagory.name
+			categoryName.innerText = curcategory.name
 
 			// Handle leaderboard sorting and adding to the table
-			const lboard = curCatagory.leaderboard
+			const lboard = curcategory.leaderboard
 			const ranks = Object.keys(lboard).sort((a, b) => Number(a) - Number(b));
 
 			if (ranks.length === 0)
@@ -147,6 +147,6 @@ console.log(
 
 const params   = new URLSearchParams(window.location.search);
 var game     = params.get("game")
-var catagory = params.get("catagory")
+var category = params.get("category")
 
 handleLeaderboard(game != null)
