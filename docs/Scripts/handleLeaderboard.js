@@ -88,9 +88,22 @@ async function handleLeaderboard(visible)
 
 			// Handle leaderboard sorting and adding to the table
 			const lboard = curCatagory.leaderboard
-			Object.keys(lboard)
-				.sort((a, b) => Number(a) - Number(b))
-				.forEach(rank => {
+			const ranks = Object.keys(lboard).sort((a, b) => Number(a) - Number(b));
+
+			if (ranks.length === 0)
+			{
+				const tr = document.createElement("tr");
+				tr.innerHTML = `
+					<td colspan="6" style="text-align:center; font-style:italic;">
+						No runs yet...
+						Maybe you can!
+					</td>
+				`;
+				leaderboardTable.appendChild(tr);
+			}
+			else
+			{
+				ranks.forEach(rank => {
 					const entry = lboard[rank];
 					const [runner, RTA, reTimed, date, verified] = entry;
 
@@ -106,7 +119,8 @@ async function handleLeaderboard(visible)
 					`;
 
 					leaderboardTable.appendChild(tr);
-				});
+				})
+			}
 			
 			// Hide loading text, and show the leaderboard which (hopefully) should have times
 			loadingTxt.style.display = "none"
