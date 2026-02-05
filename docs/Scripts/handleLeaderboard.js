@@ -27,22 +27,22 @@ async function fetchGitHubJSON(url) {
 	return JSON.parse(decoded);
 }
 
-async function fetchGameCatagories(url)
+async function fetchGameCategories(url)
 {
 	const res   = await fetch(url)
 	const files = await res.json()
 
-	var catagories = {}
+	var categories = {}
 
 	for (const file of files)
 	{
 		if (file.type !== "file") continue // not a file
 
 		const json = await fetchGitHubJSON(file.url)
-		catagories[file.name.replace(".json", "")] = json;
+		categories[file.name.replace(".json", "")] = json;
 	}
 
-	return catagories
+	return categories
 }
 
 async function handleLeaderboard(visible)
@@ -74,14 +74,14 @@ async function handleLeaderboard(visible)
 			print("Loaded name & banner")
 
 			
-			var catagories = await fetchGameCatagories(gamePath + "/catagories")
+			var categories = await fetchGameCategories(gamePath + "/categories")
 			
 			if (category == null)
 				category = "any%"
 
-			var curcategory = catagories[category]
+			var curcategory = categories[category]
 			if (!curcategory) // Fall back
-				curcategory = catagories["any%"]
+				curcategory = categories["any%"]
 
 			// Actual leaderboard stuff
 			categoryName.innerText = curcategory.name
