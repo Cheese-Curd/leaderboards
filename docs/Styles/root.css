@@ -1,12 +1,15 @@
 /* Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
-
 /* Actual stuff */
+body {
+ background-color: #292E32
+}
 * {
 	font-family: "Google Sans", sans-serif;
 
 	z-index: 1; /* So I can do BG stuff */
+ color: #FFFFFF;
 }
 
 .title {
