@@ -10,10 +10,15 @@
 		<link rel="stylesheet" href="Styles/leaderboard.css">
 	</head>
 	<body>
-		<h1 class="title">Leaderboards</h1>
-		<div id="leaderboard">
+		<h1 class="title" id="headerTitle">Leaderboards</h1>
+		<div class="menu" id="notFound">
+			<div class="subtitle">-[ Game not found ]-</div>
+			<div style="text-align: center;">Are you sure this is a valid game hosted on this site?</div>
+		</div>
+		<div class="subtitle" id="loadingTxt">Loading...</div>
+		<div class="menu" id="leaderboard">
 			<div id="banner">
-				<div id="bannerImage" style="background-image: url('generic_banner.png');"></div>
+				<div id="bannerImage"></div>
 				<div class="lbTitle" id="game">GAME NAME</div>
 				<div class="lbTitle" id="catagory">Any%</div>
 			</div>

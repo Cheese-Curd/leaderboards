@@ -45,10 +45,6 @@
 
 #leaderboard {
 	background-color: rgba(0, 0, 0, 0.5);
-	margin: auto;
-	min-height: 10%;
-	width: 50%;
-	padding: 1%;
 }
 
 .lbList {
