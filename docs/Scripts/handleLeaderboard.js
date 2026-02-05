@@ -1,3 +1,7 @@
+/* SUPABASE API URL/PUBLIC KEY */
+const SUPABASE_URL      = "https://auzlaekgsxpgyzyumrix.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_8mPxMb0aEr51tf_CWMPBIw_hp0Go8Ru";
+
 function print(str)
 {
 	console.log("[Leadboard Handler/LOG] " + str)
@@ -15,6 +19,8 @@ const bannerDiv    = document.getElementById("bannerImage")
 const categoryName = document.getElementById("category")
 
 const leaderboardTable = document.querySelector(".lbList");
+
+const webTitle = document.getElementById("webTitle")
 
 async function fetchGitHubJSON(url) {
 	const res = await fetch(url);
@@ -57,6 +63,8 @@ async function handleLeaderboard(visible)
 		
 		if ((await fetch(gamePath)).ok)
 		{
+			webTitle.innerText = "Leaderboards - Loading..."
+
 			print("Found game!")
 			const data = await fetchGitHubJSON(gamePath + "/data.json")
 			
@@ -72,7 +80,6 @@ async function handleLeaderboard(visible)
 			bannerDiv.style.backgroundImage = `url('${bannerPath}')`
 			gameName.innerText = data.name
 			print("Loaded name & banner")
-
 			
 			var categories = await fetchGameCategories(gamePath + "/categories")
 			
@@ -121,6 +128,9 @@ async function handleLeaderboard(visible)
 					leaderboardTable.appendChild(tr);
 				})
 			}
+
+			
+			webTitle.innerText = "Leaderboards - " + data.name
 			
 			// Hide loading text, and show the leaderboard which (hopefully) should have times
 			loadingTxt.style.display = "none"
