@@ -79,7 +79,9 @@ async function handleLeaderboard(visible)
 			if (catagory == null)
 				catagory = "any%"
 
-			const curCatagory = catagories[catagory]
+			var curCatagory = catagories[catagory]
+			if (!curCatagory) // Fall back
+				curCatagory = catagories["any%"]
 
 			// Actual leaderboard stuff
 			catagoryName.innerText = curCatagory.name
