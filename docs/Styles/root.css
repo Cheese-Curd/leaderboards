@@ -3,13 +3,13 @@
 
 /* Actual stuff */
 body {
- background-color: #292E32
+	background-color: #292E32;
 }
 * {
 	font-family: "Google Sans", sans-serif;
 
 	z-index: 1; /* So I can do BG stuff */
- color: #FFFFFF;
+	color: #FFFFFF;
 }
 
 .title {
