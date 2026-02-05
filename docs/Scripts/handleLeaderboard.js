@@ -2,6 +2,8 @@
 const SUPABASE_URL      = "https://auzlaekgsxpgyzyumrix.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_8mPxMb0aEr51tf_CWMPBIw_hp0Go8Ru";
 
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
 function print(str)
 {
 	console.log("[Leadboard Handler/LOG] " + str)
@@ -66,6 +68,47 @@ async function handleLeaderboard(visible)
 			webTitle.innerText = "Leaderboards - Loading..."
 
 			print("Found game!")
+
+			const { data, error } = await supabaseClient
+				.from("test_game_any")
+				.select("*")
+
+			if (error)
+				console.error(error)
+			else
+			{
+				if (data.length == 0)
+				{
+					const tr = document.createElement("tr");
+					tr.innerHTML = `
+					<td colspan="6" style="text-align:center; font-style:italic;">
+						No runs yet...
+						Maybe you can!
+					</td>
+					`;
+					leaderboardTable.appendChild(tr);
+				}
+				else
+				{
+					data.forEach(runner => {
+						const tr = document.createElement("tr");
+
+						tr.innerHTML = `
+						<td class="rank">${runner.Rank}</td>
+							<td class="runner">${runner.Runner}</td>
+							<td>${runner.RTA}</td>
+							<td>${runner.ReTimed}</td>
+							<td>${runner.Date}</td>
+						<td>${runner.Verified ? "Yes" : "No"}</td>
+						`;
+
+						leaderboardTable.appendChild(tr);
+					})
+				}
+			}
+			print("test")
+
+			/*
 			const data = await fetchGitHubJSON(gamePath + "/data.json")
 			
 			// This is for the games banner 'n stuff,
@@ -93,11 +136,39 @@ async function handleLeaderboard(visible)
 			// Actual leaderboard stuff
 			categoryName.innerText = curcategory.name
 
-			// Handle leaderboard sorting and adding to the table
-			const lboard = curcategory.leaderboard
-			const ranks = Object.keys(lboard).sort((a, b) => Number(a) - Number(b));
+			sCategory = category.replace("%", "")
 
-			if (ranks.length === 0)
+			print(`${game}_${sCategory}`)
+
+			
+
+			// var { lboard, error } = await supabaseClient
+			// 	.from('test_game_any')
+			// 	.select("*")
+
+			// if (error)
+			// 	console.error(error)
+			// else
+			// {
+			// 	print(lboard)
+			// 	// lboard.forEach( entry => {
+			// 	// 	console.log(entry.Rank)
+			// 	// 	console.log(entry.Runner)
+			// 	// })
+			// }
+
+			const { lboard, error } = await supabaseClient
+				.from("test_game_any")
+				.select("*")
+
+			if (error)
+				console.error(error)
+			else
+				console.log(lboard)
+
+			// Handle leaderboard sorting and adding to the table
+			print(lboard)
+			if (lboard.length === 0)
 			{
 				const tr = document.createElement("tr");
 				tr.innerHTML = `
@@ -110,19 +181,16 @@ async function handleLeaderboard(visible)
 			}
 			else
 			{
-				ranks.forEach(rank => {
-					const entry = lboard[rank];
-					const [runner, RTA, reTimed, date, verified] = entry;
-
+				lboard.forEach(runner => {
 					const tr = document.createElement("tr");
 
 					tr.innerHTML = `
-					<td class="rank">${rank}</td>
-						<td class="runner">${runner}</td>
-						<td>${RTA}</td>
-						<td>${reTimed}</td>
-						<td>${date}</td>
-					<td>${verified ? "Yes" : "No"}</td>
+					<td class="rank">${runner.Rank}</td>
+						<td class="runner">${runner.Runner}</td>
+						<td>${runner.RTA}</td>
+						<td>${runner.ReTimed}</td>
+						<td>${runner.Date}</td>
+					<td>${runner.Verified ? "Yes" : "No"}</td>
 					`;
 
 					leaderboardTable.appendChild(tr);
@@ -131,7 +199,8 @@ async function handleLeaderboard(visible)
 
 			
 			webTitle.innerText = "Leaderboards - " + data.name
-			
+			*/
+
 			// Hide loading text, and show the leaderboard which (hopefully) should have times
 			loadingTxt.style.display = "none"
 			leaderboardDiv.style.display = "block"
@@ -151,7 +220,7 @@ console.log(
 	"font-size: 24px; font-weight: bold; text-align: center; width: 100%; display: block;"
 );
 console.log(
-	"%c> Version 1.0.0 <",
+	"%c> Version 1.1.2 <",
 	"font-size: 18px; text-align: center; width: 100%; display: block;"
 );
 

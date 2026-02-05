@@ -7,5 +7,43 @@
 	</head>
 	<body>
 		<div>Unfinished, go to /leaderboard</div>
+
+		<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+		<script>
+			/* SUPABASE API URL/PUBLIC KEY */
+			const SUPABASE_URL      = "https://auzlaekgsxpgyzyumrix.supabase.co";
+			const SUPABASE_ANON_KEY = "sb_publishable_8mPxMb0aEr51tf_CWMPBIw_hp0Go8Ru";
+
+			const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+			async function getSupabaseData()
+			{
+				// const { data, error } = await supabaseClient
+				// 	.from("test_game_any%")
+				// 	.select("*")
+
+				// if (error)
+				// 	console.error(error)
+				// else
+				// {
+				// 	console.log(data)
+				// 	data.forEach( entry => {
+				// 		console.log(entry.Rank)
+				// 		console.log(entry.Runner)
+				// 	})
+				// }
+
+				const { data, error } = await supabaseClient
+					.from("test_game_any")
+					.select("*")
+
+				if (error)
+					console.error(error)
+				else
+					console.log(data)
+			}
+
+			getSupabaseData()
+		</script>
 	</body>
 </html>
