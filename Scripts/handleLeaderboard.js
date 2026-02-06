@@ -157,11 +157,7 @@ async function handleLeaderboard(game, category, visible)
 			}
 
 			print(banner)
-			var bannerStr = ""
-			if (banner.startsWith("http"))
-				bannerStr = banner
-			else
-				bannerStr = "./Images/Banners/" + banner
+			var bannerStr = getBannerString(banner)
 			bannerDiv.style.backgroundImage = `url('${bannerStr}')`
 
 			// Show the leaderboard which (hopefully) should have times

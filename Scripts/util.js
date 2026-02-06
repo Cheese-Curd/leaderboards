@@ -102,6 +102,17 @@ function addFooterAndHeader()
 	document.body.appendChild(footer)
 }
 
+function getBannerString(banner)
+{
+	var bannerStr = ""
+	if (banner.startsWith("http"))
+		bannerStr = banner
+	else
+		bannerStr = "./Images/Banners/" + banner
+
+	return bannerStr
+}
+
 async function init()
 {
 	addFooterAndHeader()
