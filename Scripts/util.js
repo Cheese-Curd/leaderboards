@@ -1,0 +1,74 @@
+/* SUPABASE API URL/PUBLIC KEY */
+const SUPABASE_URL      = "https://auzlaekgsxpgyzyumrix.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_8mPxMb0aEr51tf_CWMPBIw_hp0Go8Ru";
+
+supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+user = null
+
+function titleCase(str)
+{
+	return str
+		.replace(/[_-]/g, " ")
+		.toLowerCase()
+		.replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function formatDate(str)
+{
+	const [year, month, day] = str.split("-");
+
+	// I'll just use this for whenever the date is unknown (Times before the leaderboard was on this site)
+	if (year == "0001" && month == "01" && day == "01")
+		return "Unknown"
+
+	return `${month}/${day}/${year}`;
+}
+
+var displayNames = {}
+
+function getDisplayNameFromUUID(uuid)
+{
+	return displayNames[uuid]
+}
+
+console.log(
+	"%c-[ Utility Script Loaded ]-",
+	"font-size: 24px; font-weight: bold; text-align: center; width: 100%; display: block;"
+);
+console.log(
+	"%c> Version 1.0.0 <",
+	"font-size: 18px; text-align: center; width: 100%; display: block;"
+);
+
+function uPrint(str)
+{
+	console.log("[Util/LOG] " + str)
+}
+
+async function getDisplayNames()
+{
+	const { data, error } = await supabaseClient
+		.from("user_data")
+		.select("*")
+	
+	if (error)
+		throw new Error("Failed to gather user data!")
+
+	var list = {}
+
+	data.forEach(user => {
+		list[user.id] = user.display_name
+	})
+
+	uPrint("Got users")
+
+	return list
+}
+
+async function init()
+{
+	user         = await supabaseClient.auth.getUser();
+	displayNames = await getDisplayNames()
+}
+
+init()
