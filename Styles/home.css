@@ -20,11 +20,14 @@
 
 	text-decoration: none;
 	font-weight: 600;
+
+	transition: width 0.5s;
 }
 
 .game:hover {
 	color: rgb(10, 10, 10);
 	font-weight: 800;
+	width: 10.5vw;
 }
 
 #gameList {
