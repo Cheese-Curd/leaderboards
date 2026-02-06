@@ -80,8 +80,32 @@ function addLoading()
 	return loading
 }
 
+function addFooterAndHeader()
+{
+	var footer = document.createElement("footer")
+	var copyright = document.createElement("div")
+	copyright.id = "copyright"
+	var cprTxt = document.createElement("span")
+	cprTxt.innerText = "[Apache 2.0] Copyright © 2026 cheese-curd.github.io - All Rights Reserved. "
+	var license = document.createElement("a")
+	license.innerText = "[ License ]"
+	license.href = "./LICENSE.md"
+
+	footer.appendChild(copyright)
+	copyright.appendChild(cprTxt)
+	copyright.appendChild(license)
+
+	var header = document.createElement("header")
+	header.id = "header"
+
+	document.body.appendChild(header)
+	document.body.appendChild(footer)
+}
+
 async function init()
 {
+	addFooterAndHeader()
+	makeHeaderButton("Home", "./")
 	var loadingTxt = addLoading()
 
 	loadingTxt.innerText = "Getting User Data..."
@@ -104,5 +128,5 @@ async function init()
 	})
 	uPrint("Fetched Games")
 	
-	loadingTxt.innerText = "Loading..."
+	loadingTxt.innerText = "Finishing up..."
 }

@@ -160,8 +160,9 @@ async function handleLeaderboard(game, category, visible)
 			leaderboardDiv.style.display = "block"
 			errorDiv.style.display = "none"
 			titleText.innerText = "Leaderboard"
-
-			loadingTxt.style.display = "none"
+			
+			loadingTxt.style.opacity = 0
+			document.getElementById("content").className = "fadeOutBlur"
 		}
 	}
 	else

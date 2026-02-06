@@ -8,29 +8,24 @@
 		<link rel="stylesheet" href="Styles/root.css">
 	</head>
 	<body>
-
-		<header id="header"></header>
-
 		<main id="content">
-			<div>Unfinished, go to /leaderboard</div>
+			<h1 class="title" id="headerTitle">Home</h1>
 
 		</main>
-
-		<footer>
-			<div id="copyright">
-				<span>
-					Apache License 2.0 - Copyright 2026 Eliana
-				</span>
-				<a href="LICENSE.md">[ License ]</a>
-			</div>
-		</footer>
 
 		<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 		<script src="Scripts/util.js"></script>
 		<script src="Scripts/header.js"></script>
 
 		<script>
-			
+			async function load()
+			{
+				await init()
+				document.getElementById("content").className = "fadeOutBlur"
+				loadingTxt.style.opacity = 0
+			}
+
+			load()
 		</script>
 	</body>
 </html>
