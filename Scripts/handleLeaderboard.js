@@ -37,6 +37,9 @@ function err(err, title, desc, code)
 	errorTitle.innerText = title
 	errorDesc.innerText = desc
 
+	loadingTxt.style.opacity = 0
+	document.getElementById("content").className = "fadeOutBlur"
+
 	if (err != null)
 		throw new Error(err)
 }
