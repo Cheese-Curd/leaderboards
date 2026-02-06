@@ -115,17 +115,18 @@ header, footer {
 	align-items: center;
 
 	font-size: large;
+
+	z-index: 15;
+	pointer-events: auto;
 }
 
 header {
 	top: 0;
-	z-index: 3;
 	border-bottom: 5px solid rgba(0, 0, 0, 0.25);
 }
 
 footer {
 	bottom: 0;
-	z-index: 3;
 	border-top: 5px solid rgba(0, 0, 0, 0.25);
 }
 
@@ -138,4 +139,10 @@ footer {
 .headerBtn {
 	margin-right: 1rem;
 	font-size: x-large;
+
+	/* Genuinely don't know why it's not working :( */
+	position: relative;
+    z-index: 100;
+    pointer-events: auto;
+    cursor: pointer;
 }
