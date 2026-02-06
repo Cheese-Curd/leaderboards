@@ -84,7 +84,7 @@ async function getGameData(gameName, selCategory)
 	{
 		err(error, `Failed to get game data for ${gameName}.`, "Error: " + error.message, error.code + " [L122]")
 		if (selCategory != "any") // fall back for if the site couldn't find the category
-			window.location.href = "/leaderboard.html?game=" + gameName + "&category=any%"
+			window.location.href = "./leaderboard.html?game=" + gameName + "&category=any%"
 	}
 	else
 	{
@@ -160,12 +160,12 @@ async function handleLeaderboard(game, category, visible)
 			leaderboardDiv.style.display = "block"
 			errorDiv.style.display = "none"
 			titleText.innerText = "Leaderboard"
-			
+
 			loadingTxt.style.display = "none"
 		}
 	}
 	else
-		window.location.href = "/" // Go back to the main page as there is no game requested
+		window.location.href = "./" // Go back to the main page as there is no game requested
 
 	return true
 }

@@ -25,4 +25,4 @@ console.log(
 	"font-size: 18px; text-align: center; width: 100%; display: block;"
 );
 
-makeHeaderButton("Home", "/")
+makeHeaderButton("Home", "./")
