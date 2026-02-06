@@ -25,6 +25,7 @@ function formatDate(str)
 }
 
 var displayNames = {}
+var validGames   = {}
 
 function getDisplayNameFromUUID(uuid)
 {
@@ -65,10 +66,43 @@ async function getDisplayNames()
 	return list
 }
 
-async function init()
+function addLoading()
 {
-	user         = await supabaseClient.auth.getUser();
-	displayNames = await getDisplayNames()
+	// <div class="subtitle" id="loadingTxt">Loading...</div>
+
+	var loading = document.createElement("div")
+	loading.className = "subtitle"
+	loading.id = "loadingTxt"
+	loading.innerText = "Loading..."
+
+	document.body.appendChild(loading)
+	
+	return loading
 }
 
-init()
+async function init()
+{
+	var loadingTxt = addLoading()
+
+	loadingTxt.innerText = "Getting User Data..."
+	user         = await supabaseClient.auth.getUser();
+	displayNames = await getDisplayNames()
+
+	loadingTxt.innerText = "Getting Game Data..."
+	const { data, error } = await supabaseClient
+		.from("games")
+		.select("gameID,gameName,banner")
+
+	if (error)
+		throw new Error(error.message)
+
+	data.forEach(game => {
+		validGames[game.gameID] = {
+			gameName: game.gameName,
+			banner: game.banner
+		};
+	})
+	uPrint("Fetched Games")
+	
+	loadingTxt.innerText = "Loading..."
+}

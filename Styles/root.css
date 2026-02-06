@@ -7,12 +7,24 @@ body {
 	margin: auto;
 
 	background-repeat: repeat;
+	background-image: url(../Images/Backgrounds/generic_bg.png)
 }
+
 * {
 	font-family: "Google Sans", sans-serif;
 
 	z-index: 1; /* So I can do BG stuff */
 	color: #FFFFFF;
+}
+
+a {
+	transition: color 0.5s;
+	transition: font-weight 0.25s;
+}
+
+a:hover {
+	color: #dbdbfa;
+	font-weight: bolder;
 }
 
 .title {
@@ -57,19 +69,56 @@ body {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	display: none;
 }
 
 #content {
 	background-color: rgba(51, 51, 70, 0.25);
 
-	height: 100vh;
+	height: calc(100vh - 8rem);
 	width: 60%;
 	padding: 1%;
 
 	margin: auto;
+	margin-top: 4rem;
 
 	box-sizing: border-box;
 
 	overflow-y: auto;
+}
+
+header, footer {
+	position: absolute;
+	width: 100%;
+
+	height: 4rem;
+	background-color: rgba(51, 51, 70, 0.25);
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	font-size: large;
+}
+
+header {
+	top: 0;
+	z-index: 3;
+	border-bottom: 5px solid rgba(0, 0, 0, 0.25);
+}
+
+footer {
+	bottom: 0;
+	z-index: 3;
+	border-top: 5px solid rgba(0, 0, 0, 0.25);
+}
+
+#copyright {
+	width: auto;
+	text-align: center;
+	font-style: italic;
+}
+
+.headerBtn {
+	margin-right: 1rem;
+	font-size: x-large;
 }

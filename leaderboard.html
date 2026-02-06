@@ -9,14 +9,16 @@
 		<link rel="stylesheet" href="Styles/root.css">
 		<link rel="stylesheet" href="Styles/leaderboard.css">
 	</head>
-	<body style="background-image: url('Images/Backgrounds/generic_bg.png');">
+	<body>
+		<header id="header"></header>
+
 		<main id="content">
 			<h1 class="title" id="headerTitle">Please Wait...</h1>
+
 			<div class="menu" id="error">
 				<div id="errorTitle" class="subtitle">-[ Game not found ]-</div>
 				<div id="errorDesc" class="subtitle2" style="text-align: center;">Are you sure this is a valid game hosted on this site?</div>
 			</div>
-			<div class="subtitle" id="loadingTxt">Loading...</div>
 
 			<div class="menu" id="leaderboard">
 				<div id="banner">
@@ -49,7 +51,23 @@
 		
 		<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 		<script src="Scripts/util.js"></script>
-		
+		<script src="Scripts/header.js"></script>
+
 		<script src="Scripts/handleLeaderboard.js"></script>
+
+		<script>
+			async function load()
+			{
+				await init()
+
+				const params   = new URLSearchParams(window.location.search);
+				var game     = params.get("game")
+				var category = params.get("category")
+
+				handleLeaderboard(game, category, game != null)
+			}
+
+			load()
+		</script>
 	</body>
 </html>

@@ -1,5 +1,4 @@
 const leaderboardDiv = document.getElementById("leaderboard")
-const loadingTxt     = document.getElementById("loadingTxt")
 const errorDiv       = document.getElementById("error")
 const titleText      = document.getElementById("headerTitle")
 
@@ -31,7 +30,7 @@ function err(err, title, desc, code)
 	warn("An error has occured!")
 
 	titleText.innerText = `! ERROR !\n(${code})`
-	loadingTxt.style.display = "none"
+	
 	leaderboardDiv.style.display = "none"
 	errorDiv.style.display = "block"
 
@@ -50,29 +49,19 @@ async function isValidGame(gameName)
 	var engName = "" 
 	var banner  = ""
 
-	const { data, error } = await supabaseClient
-		.from("games")
-		.select("gameID,gameName,banner") // Only need the ID and name
+	if (validGames == null)
+		return err(null, "Failed to fetch games.", "Error: 'data' in null/undefined", "500 [L89]"), false
 
-	if (error)
+	for (const [gameID, game] of Object.entries(validGames))
 	{
-		err(error, "Failed to fetch games.", "Error: " + error.name, error.code)
-		return false
-	}
-	else
-	{
-		if (data == null)
-			return err(null, "Failed to fetch games.", "Error: 'data' in null/undefined", "500 [L89]"), false
-		
-		data.forEach(game => {
-			if (game.gameID == gameName)
-			{
-				print("Found game! (" + game.gameName + ")")
-				valid   = true
-				engName = game.gameName
-				banner  = game.banner
-			}
-		})
+		if (gameID == gameName)
+		{
+			print("Found game! (" + game.gameName + ")")
+			valid   = true
+			engName = game.gameName
+			banner  = game.banner
+			break
+		}
 	}
 
 	if (!valid)
@@ -106,14 +95,12 @@ async function getGameData(gameName, selCategory)
 	}
 }
 
-async function handleLeaderboard(visible)
+async function handleLeaderboard(game, category, visible)
 {
 	leaderboardDiv.style.display = "none"
 
 	if (visible)
 	{
-		loadingTxt.style.display = "block"
-		
 		var { valid, engName, banner } = await isValidGame(game.toLowerCase())
 		if (valid)
 		{
@@ -149,12 +136,13 @@ async function handleLeaderboard(visible)
 			{
 				print(`Found ${lboard.length} run(s)`)
 				lboard.forEach(entry => {
-					print(`${entry.Rank} -> ${entry.Runner}`)
+					var runnerDName = getDisplayNameFromUUID(entry.Runner)
+					print(`${entry.Rank} -> ${runnerDName}`)
 					const tr = document.createElement("tr");
 
 					tr.innerHTML = `
 					<td class="rank">${entry.Rank}</td>
-						<td class="runner">${getDisplayNameFromUUID(entry.Runner)}</td>
+						<td class="runner">${runnerDName}</td>
 						<td>${entry.RTA}</td>
 						<td>${entry.ReTimed}</td>
 						<td>${formatDate(entry.Date)}</td>
@@ -168,13 +156,16 @@ async function handleLeaderboard(visible)
 			print(banner)
 			bannerDiv.style.backgroundImage = `url('Images/Banners/${banner}')`
 
-			// Hide loading text, and show the leaderboard which (hopefully) should have times
-			loadingTxt.style.display = "none"
+			// Show the leaderboard which (hopefully) should have times
 			leaderboardDiv.style.display = "block"
 			errorDiv.style.display = "none"
 			titleText.innerText = "Leaderboard"
+			
+			loadingTxt.style.display = "none"
 		}
 	}
+	else
+		window.location.href = "/" // Go back to the main page as there is no game requested
 
 	return true
 }
@@ -187,9 +178,3 @@ console.log(
 	"%c> Version 1.1.2 <",
 	"font-size: 18px; text-align: center; width: 100%; display: block;"
 );
-
-const params   = new URLSearchParams(window.location.search);
-var game     = params.get("game")
-var category = params.get("category")
-
-handleLeaderboard(game != null)
