@@ -6,11 +6,12 @@
 		<title>Leaderboards - Home</title>
 
 		<link rel="stylesheet" href="Styles/root.css">
+		<link rel="stylesheet" href="Styles/home.css">
 	</head>
 	<body>
 		<main id="content">
 			<h1 class="title" id="headerTitle">Home</h1>
-
+			<div class="menu" id="gameList"></div>
 		</main>
 
 		<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
@@ -18,9 +19,35 @@
 		<script src="Scripts/header.js"></script>
 
 		<script>
+			const gameList = document.getElementById("gameList")
+			function addGame(id, banner, name)
+			{
+				// <a class="game" style="background-image: url(./Images/Banners/generic_banner.png);" href="./">
+				// 	Game Name
+				// </a>
+				var a = document.createElement("a")
+				a.className = "game"
+				a.href = "./leaderboard?game=" + id
+				a.innerText = name
+				
+				a.style.backgroundImage = `url('${getBannerString(banner)}')`
+
+				gameList.appendChild(a)
+			}
+
 			async function load()
 			{
 				await init()
+
+				loadingTxt.innerText = "Loading Games..."
+				for (const [gameID, game] of Object.entries(validGames))
+				{
+					console.log("Found game! (" + game.gameID + ")")
+
+					addGame(gameID, game.banner, game.gameName)
+				}
+
+				loadingTxt.innerText = "Done!"
 				document.getElementById("content").className = "fadeOutBlur"
 				loadingTxt.style.opacity = 0
 			}

@@ -165,6 +165,7 @@ async function handleLeaderboard(game, category, visible)
 			errorDiv.style.display = "none"
 			titleText.innerText = "Leaderboard"
 			
+			loadingTxt.innerText = "Done!"
 			loadingTxt.style.opacity = 0
 			document.getElementById("content").className = "fadeOutBlur"
 		}
