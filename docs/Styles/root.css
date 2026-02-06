@@ -4,6 +4,9 @@
 /* Actual stuff */
 body {
 	background-color: #292E32;
+	margin: auto;
+
+	background-repeat: repeat;
 }
 * {
 	font-family: "Google Sans", sans-serif;
