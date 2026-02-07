@@ -86,6 +86,10 @@
 }
 
 .special {
-	color: yellow;
-	font-weight: bolder;
+	font-weight: bold;
+	font-size: 2rem;
+	background: linear-gradient(90deg, #ffee00, #fff782, #fffab4);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
