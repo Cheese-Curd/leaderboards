@@ -151,8 +151,7 @@ footer {
 .headerBtn {
 	margin-right: 1rem;
 	font-size: x-large;
-
-	/* Genuinely don't know why it's not working :( */
+	
 	position: relative;
     z-index: 100;
     pointer-events: auto;
