@@ -30,6 +30,9 @@
 #category {
 	font-size: x-large;
 	font-weight: bold;
+
+	display: block;
+	margin: 0 auto;
 }
 
 /* Actual Leaderboard */
