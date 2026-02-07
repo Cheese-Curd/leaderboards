@@ -94,7 +94,7 @@ async function getGameData(gameName, selCategory)
 		errorDiv.style.display = "none"
 
 		print("Got data!")
-		return data
+		return data.sort((a, b) => a.Rank - b.Rank);
 	}
 }
 
