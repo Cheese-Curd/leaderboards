@@ -20,14 +20,14 @@
 
 		<script>
 			const gameList = document.getElementById("gameList")
-			function addGame(id, banner, name)
+			function addGame(id, icon, name)
 			{
 				var a = document.createElement("a")
 				a.className = "game"
 				a.href = "./leaderboard?game=" + id
 				a.innerText = name
 				
-				a.style.backgroundImage = `url('${getBannerString(banner)}')`
+				a.style.backgroundImage = `url('${getIconString(icon)}')`
 
 				gameList.appendChild(a)
 			}
@@ -41,7 +41,7 @@
 				{
 					console.log("Found game! (" + game.gameID + ")")
 
-					addGame(gameID, game.banner, game.gameName)
+					addGame(gameID, game.icon, game.gameName)
 				}
 
 				loadingTxt.innerText = "Done!"

@@ -102,15 +102,26 @@ function addFooterAndHeader()
 	document.body.appendChild(footer)
 }
 
+function getURLString(uCategory, url)
+{
+	console.log(uCategory, url)
+	var urlStr = ""
+	if (url.startsWith("http"))
+		urlStr = url
+	else
+		urlStr = "./Images/" + uCategory + "/" + banner
+
+	return urlStr
+}
+
 function getBannerString(banner)
 {
-	var bannerStr = ""
-	if (banner.startsWith("http"))
-		bannerStr = banner
-	else
-		bannerStr = "./Images/Banners/" + banner
+	return getURLString("Banner", banner)
+}
 
-	return bannerStr
+function getIconString(icon)
+{
+	return getURLString("Icon", icon)
 }
 
 async function init()
@@ -126,7 +137,7 @@ async function init()
 	loadingTxt.innerText = "Getting Game Data..."
 	const { data, error } = await supabaseClient
 		.from("games")
-		.select("gameID,gameName,banner,categories")
+		.select("*")
 
 	if (error)
 		throw new Error(error.message)
@@ -135,6 +146,7 @@ async function init()
 		validGames[game.gameID] = {
 			gameName: game.gameName,
 			banner: game.banner,
+			icon: game.icon,
 			categories: game.categories
 		};
 	})
