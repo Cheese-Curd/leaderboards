@@ -17,15 +17,27 @@ body {
 	color: #FFFFFF;
 }
 
-a {
-	transition: color 0.5s;
-	transition: font-weight 0.25s;
+a, select {
+	transition:
+		color 0.5s,
+		font-weight 0.25s;
 }
 
-a:hover {
+a:hover, select:hover {
 	color: #dbdbfa;
 	font-weight: bolder;
 }
+
+select {
+	background-color: transparent;
+	border: none;
+}
+
+select option {
+	color: rgb(0, 0, 0);
+	text-shadow: none;
+}
+
 
 .title {
 	font-size: 5vw;
