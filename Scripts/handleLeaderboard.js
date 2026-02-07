@@ -146,7 +146,7 @@ async function handleLeaderboard(game, category, visible)
 					tr.innerHTML = `
 					<td class="rank">${entry.Rank}</td>
 						<td class="runner">${runnerDName}</td>
-						<td>${entry.RTA}</td>
+						<td title="${entry.Special ? entry.SpecialReason : ""}" class="${entry.Special ? "special" : ""}">${entry.RTA}</td>
 						<td>${entry.ReTimed}</td>
 						<td>${formatDate(entry.Date)}</td>
 					<td>${entry.Verified ? "Yes" : "No"}</td>

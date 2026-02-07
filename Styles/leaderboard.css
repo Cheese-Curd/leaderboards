@@ -84,3 +84,8 @@
     width: 3ch;
     text-align: center;
 }
+
+.special {
+	color: yellow;
+	font-weight: bolder;
+}
