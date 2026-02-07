@@ -126,7 +126,7 @@ async function init()
 	loadingTxt.innerText = "Getting Game Data..."
 	const { data, error } = await supabaseClient
 		.from("games")
-		.select("gameID,gameName,banner")
+		.select("gameID,gameName,banner,categories")
 
 	if (error)
 		throw new Error(error.message)
@@ -134,7 +134,8 @@ async function init()
 	data.forEach(game => {
 		validGames[game.gameID] = {
 			gameName: game.gameName,
-			banner: game.banner
+			banner: game.banner,
+			categories: game.categories
 		};
 	})
 	uPrint("Fetched Games")
