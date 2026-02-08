@@ -1,6 +1,13 @@
 /* Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* Color */
+:root {
+	--contentColor: rgba(51, 51, 70, 0.25);
+	--menuColor: rgba(51, 51, 70, 0.5);
+	--textShadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.75);
+}
+
 /* Actual stuff */
 body {
 	background-color: #292E32;
@@ -44,7 +51,7 @@ select option {
 	font-weight: bolder;
 	text-align: center;
 
-	text-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.75);
+	text-shadow: var(--textShadow)
 }
 
 .subtitle {
@@ -52,7 +59,7 @@ select option {
 	font-weight: bolder;
 	text-align: center;
 
-	text-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.75);
+	text-shadow: var(--textShadow)
 }
 
 .subtitle2 {
@@ -60,7 +67,7 @@ select option {
 	font-weight: bolder;
 	text-align: center;
 
-	text-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.75);
+	text-shadow: var(--textShadow)
 }
 
 .menu {
@@ -69,7 +76,7 @@ select option {
 	padding: 1%;
 	margin: 2vw auto;
 	border-radius: 1rem;
-	background-color: rgba(51, 51, 70, 0.5)
+	background-color: var(--menuColor)
 }
 
 #error {
@@ -90,7 +97,7 @@ select option {
 
 #content {
 	user-select: none;
-	background-color: rgba(51, 51, 70, 0.25);
+	background-color: var(--contentColor);
 
 	height: calc(100vh - 12vh);
 	width: 60%;
@@ -120,7 +127,7 @@ header, footer {
 	width: 100%;
 
 	height: 6vh;
-	background-color: rgba(51, 51, 70, 0.25);
+	background-color: var(--contentColor);
 
 	display: flex;
 	justify-content: center;
@@ -156,4 +163,63 @@ footer {
     z-index: 100;
     pointer-events: auto;
     cursor: pointer;
+
+	user-select: none;
+}
+
+/* News Stuff */
+#newsBox {
+	position: absolute;
+	top: 6vh;
+	left: -20%; /* Off screen */
+
+	width: 20%;
+	height: calc(100% - 12vh);
+	background-color: var(--contentColor);
+
+	transition: transform 0.5s;
+
+	border-right: 5px solid rgba(0, 0, 0, 0.25);
+}
+
+#newsToggleContainer {
+	position: absolute;
+	left: 2vw;
+
+	z-index: 9999;
+
+	display: flex;
+	align-items: center;
+}
+
+.post {
+	align-items: center;
+	display: flex;
+
+	z-index: 99;
+	user-select: none;
+
+	font-weight: normal;
+	text-decoration: none;
+
+	transition:
+		transform 0.5s,
+		font-weight 0.5s;
+}
+
+.post:hover {
+	transform: scale(1.1);
+}
+
+.postPoster {
+	font-size: small;
+	font-style: italic;
+}
+
+.postTitle {
+	font-size: large;
+}
+
+.postIcon {
+	width: 4vw;
 }

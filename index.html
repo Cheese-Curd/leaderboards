@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Leaderboards - Home</title>
+		<title id="webTitle">Leaderboards - Home</title>
 
 		<link rel="stylesheet" href="Styles/root.css">
 		<link rel="stylesheet" href="Styles/home.css">
@@ -11,10 +11,17 @@
 	<body>
 		<main id="content">
 			<h1 class="title" id="headerTitle">Home</h1>
+
+			<div class="menu" id="error">
+				<div id="errorTitle" class="subtitle">ERROR</div>
+				<div id="errorDesc" class="subtitle2" style="text-align: center;">ERROR</div>
+			</div>
+
 			<div class="menu" id="gameList"></div>
 		</main>
 
 		<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+		<script src="Scripts/newsHandler.js"></script>
 		<script src="Scripts/util.js"></script>
 		<script src="Scripts/header.js"></script>
 
@@ -39,7 +46,7 @@
 				loadingTxt.innerText = "Loading Games..."
 				for (const [gameID, game] of Object.entries(validGames))
 				{
-					console.log("Found game! (" + game.gameID + ")")
+					console.log("Found game! (" + gameID + ")")
 
 					addGame(gameID, game.icon, game.gameName)
 				}

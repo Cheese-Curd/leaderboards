@@ -3,11 +3,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-		<title id="webTitle">Leaderboards</title>
+		<title id="webTitle">Leaderboards - Loading...</title>
 
 		<link rel="stylesheet" href="Styles/root.css">
-		<link rel="stylesheet" href="Styles/leaderboard.css">
+		<link rel="stylesheet" href="Styles/news.css">
 	</head>
 	<body>
 		<main id="content">
@@ -18,24 +17,8 @@
 				<div id="errorDesc" class="subtitle2" style="text-align: center;">ERROR</div>
 			</div>
 
-			<div class="menu" id="leaderboard">
-				<div id="banner">
-					<div id="bannerImage"></div>
-					<div class="lbTitle" id="game">GAME NAME</div>
-					<select class="lbTitle" id="category">CATEGORY NAME</select>
-				</div>
-				<hr>
-				<table class="lbList">
-					<tr>
-						<th class="rank">#</th>
-						<th class="runner">Runner</th>
-						<th>RTA</th>
-						<th>Retimed</th>
-						<th>Date</th>
-						<th>Verified</th>
-					</tr>
-				</table>
-			</div>
+			<div id="poster"></div>
+			<div class="menu" id="newsPost"></div>
 		</main>
 
 		<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
@@ -43,17 +26,16 @@
 		<script src="Scripts/util.js"></script>
 		<script src="Scripts/header.js"></script>
 
-		<script src="Scripts/handleLeaderboard.js"></script>
-
 		<script>
 			async function load()
 			{
 				await init()
+				loadingTxt.innerText = "Setting up post..."
+				await handlePost()
 
-				var game     = params.get("game")
-				var category = params.get("category")
-
-				handleLeaderboard(game, category, game != null)
+				loadingTxt.innerText = "Done!"
+				document.getElementById("content").className = "fadeOutBlur"
+				loadingTxt.style.opacity = 0
 			}
 
 			load()

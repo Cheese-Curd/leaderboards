@@ -2,8 +2,12 @@
 const SUPABASE_URL      = "https://auzlaekgsxpgyzyumrix.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_8mPxMb0aEr51tf_CWMPBIw_hp0Go8Ru";
 
+const params = new URLSearchParams(window.location.search);
+
 supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 user = null
+
+webTitle = document.getElementById("webTitle")
 
 function titleCase(str)
 {
@@ -26,9 +30,13 @@ function formatDate(str)
 
 var displayNames = {}
 var validGames   = {}
+var newsData     = {}
 
 function getDisplayNameFromUUID(uuid)
 {
+	if (uuid == null)
+		return "Deleted User"
+
 	return displayNames[uuid]
 }
 
@@ -124,11 +132,85 @@ function getIconString(icon)
 	return getURLString("Icon", icon)
 }
 
+function err(err, title, desc, code)
+{
+	webTitle.innerText = "Leaderboards - ERROR"
+
+	titleText.innerText = `! ERROR !\n(${code})`
+	
+	document.getElementById("content").childNodes.forEach(child => {
+		if (child.className == "headerTitle" || child.className == "error")
+			return
+
+		child.style.display = "none"
+	})
+
+	errorDiv.style.display = "block"
+
+	errorTitle.innerText = title
+	errorDesc.innerText = desc
+
+	loadingTxt.style.opacity = 0
+	document.getElementById("content").className = "fadeOutBlur"
+
+	if (err != null)
+		throw new Error(err)
+}
+
+async function getNewsData()
+{
+	const { data, error } = await supabaseClient
+		.from("news")
+		.select("*")
+
+	if (error)
+		err(error, `Failed to get news data.`, "Error: " + error.message, error.code + " [L37]")
+	else
+		return data
+}
+
+var timezoneOffset = new Date().getTimezoneOffset();
+
+// ChatGPT did this
+// Make timestamp ISO-compliant so JS parses it correctly
+function normalizeTimestamp(ts) {
+    // Replace space with T and ensure +00:00 format
+    if (!ts.includes("T")) ts = ts.replace(" ", "T");
+    if (ts.endsWith("+00")) ts += ":00";
+    return ts;
+}
+
+// Convert timestamp to a table of Date / Time / Time-24hour
+function timestampToTable(timestamp) {
+    const date = new Date(normalizeTimestamp(timestamp));
+
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const dd = String(date.getDate()).padStart(2, "0");
+
+    const hours24 = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    let hours12 = date.getHours();
+    const ampm = hours12 >= 12 ? "PM" : "AM";
+    hours12 = hours12 % 12 || 12;
+
+    return {
+        Date: formatDate(`${yyyy}-${mm}-${dd}`),
+        Time: `${hours12}:${minutes} ${ampm}`,
+        "Time-24hour": `${hours24}:${minutes}`,
+    };
+}
+// No longer ChatGPT
+
 async function init()
 {
+	var loadingTxt = addLoading()
+	loadingTxt.innerText = "Handling Header/Footer..."
+
 	addFooterAndHeader()
 	makeHeaderButton("Home", "./")
-	var loadingTxt = addLoading()
+	initNews()
 
 	loadingTxt.innerText = "Getting User Data..."
 	user         = await supabaseClient.auth.getUser();
@@ -150,7 +232,12 @@ async function init()
 			categories: game.categories
 		};
 	})
-	uPrint("Fetched Games")
+
+	loadingTxt.innerText = "Getting News Posts..."
+	newsData = await getNewsData()
+	newsData.forEach(post => {
+		addNews(post)
+	})
 	
 	loadingTxt.innerText = "Finishing up..."
 }

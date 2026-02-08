@@ -11,8 +11,6 @@ const categoryList = document.getElementById("category")
 
 const leaderboardTable = document.querySelector(".lbList");
 
-const webTitle = document.getElementById("webTitle")
-
 function print(str)
 {
 	console.log("[Leadboard Handler/LOG] " + str)
@@ -21,27 +19,6 @@ function print(str)
 function warn(str)
 {
 	console.warn("[Leaderboard Handler/WARN] " + str)
-}
-
-function err(err, title, desc, code)
-{
-	webTitle.innerText = "Leaderboards - ERROR"
-
-	warn("An error has occured!")
-
-	titleText.innerText = `! ERROR !\n(${code})`
-	
-	leaderboardDiv.style.display = "none"
-	errorDiv.style.display = "block"
-
-	errorTitle.innerText = title
-	errorDesc.innerText = desc
-
-	loadingTxt.style.opacity = 0
-	document.getElementById("content").className = "fadeOutBlur"
-
-	if (err != null)
-		throw new Error(err)
 }
 
 async function isValidGame(gameName)
